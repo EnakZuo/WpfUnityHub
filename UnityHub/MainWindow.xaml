@@ -1,0 +1,62 @@
+<ui:FluentWindow x:Class="UnityHub.MainWindow"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+              xmlns:local="clr-namespace:UnityHub"
+              Title="Unity Hub"
+              Width="1200"
+              Height="800"
+              WindowStartupLocation="CenterScreen"
+              Icon="Assets/icon.ico">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 顶部导航栏 -->
+        <ui:TitleBar
+            Grid.Row="0"
+            Title="Unity Hub"
+            Icon="Assets/icon.ico" />
+
+        <!-- 主内容区域 -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 左侧导航面板 -->
+            <ui:NavigationView Grid.Column="0" 
+                               x:Name="NavigationView"
+                               PaneDisplayMode="LeftFluent"
+                               SelectionChanged="NavigationView_SelectionChanged">
+                
+                <ui:NavigationView.MenuItems>
+                    <ui:NavigationViewItem Content="项目" TargetPageType="{x:Type local:ProjectsPage}">
+                        <ui:NavigationViewItem.Icon>
+                            <ui:SymbolIcon Symbol="Home24" />
+                        </ui:NavigationViewItem.Icon>
+                    </ui:NavigationViewItem>
+                    <ui:NavigationViewItem Content="引擎" TargetPageType="{x:Type local:EnginesPage}">
+                        <ui:NavigationViewItem.Icon>
+                            <ui:SymbolIcon Symbol="Settings24" />
+                        </ui:NavigationViewItem.Icon>
+                    </ui:NavigationViewItem>
+                    <ui:NavigationViewItem Content="设置" TargetPageType="{x:Type local:SettingsPage}">
+                        <ui:NavigationViewItem.Icon>
+                            <ui:SymbolIcon Symbol="Settings24" />
+                        </ui:NavigationViewItem.Icon>
+                    </ui:NavigationViewItem>
+                </ui:NavigationView.MenuItems>
+            </ui:NavigationView>
+
+            <!-- 右侧内容区域 -->
+            <ContentControl Grid.Column="1" 
+                           x:Name="ContentFrame">
+            </ContentControl>
+        </Grid>
+    </Grid>
+</ui:FluentWindow>
