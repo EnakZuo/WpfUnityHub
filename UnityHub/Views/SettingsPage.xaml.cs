@@ -1,7 +1,7 @@
 using System.Windows.Controls;
 using UnityHub.ViewModels;
 
-namespace UnityHub
+namespace UnityHub.Views
 {
     public partial class SettingsPage : Page
     {

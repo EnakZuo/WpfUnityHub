@@ -3,6 +3,7 @@
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
               xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
               xmlns:local="clr-namespace:UnityHub"
+              xmlns:views="clr-namespace:UnityHub.Views"
               Title="Unity Hub"
               Width="1200"
               Height="800"
@@ -35,17 +36,17 @@
                                SelectionChanged="NavigationView_SelectionChanged">
                 
                 <ui:NavigationView.MenuItems>
-                    <ui:NavigationViewItem Content="项目" TargetPageType="{x:Type local:ProjectsPage}">
+                    <ui:NavigationViewItem Content="项目" TargetPageType="{x:Type views:ProjectsPage}">
                         <ui:NavigationViewItem.Icon>
                             <ui:SymbolIcon Symbol="Home24" />
                         </ui:NavigationViewItem.Icon>
                     </ui:NavigationViewItem>
-                    <ui:NavigationViewItem Content="引擎" TargetPageType="{x:Type local:EnginesPage}">
+                    <ui:NavigationViewItem Content="引擎" TargetPageType="{x:Type views:EnginesPage}">
                         <ui:NavigationViewItem.Icon>
                             <ui:SymbolIcon Symbol="Engine24" />
                         </ui:NavigationViewItem.Icon>
                     </ui:NavigationViewItem>
-                    <ui:NavigationViewItem Content="设置" TargetPageType="{x:Type local:SettingsPage}">
+                    <ui:NavigationViewItem Content="设置" TargetPageType="{x:Type views:SettingsPage}">
                         <ui:NavigationViewItem.Icon>
                             <ui:SymbolIcon Symbol="Settings24" />
                         </ui:NavigationViewItem.Icon>

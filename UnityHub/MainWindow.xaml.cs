@@ -11,6 +11,7 @@ using Wpf.Ui.Controls;
 using Wpf.Ui.Appearance;
 using Button = Wpf.Ui.Controls.Button;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
+using UnityHub.Views;
 
 namespace UnityHub
 {

@@ -1,8 +1,8 @@
-<Page x:Class="UnityHub.EnginesPage"
+<Page x:Class="UnityHub.Views.ProjectsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      Title="引擎页面">
+      Title="项目页面">
 
     <Grid Width="1080">
         <Grid.RowDefinitions>
@@ -10,32 +10,32 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- 引擎页面标题和按钮 -->
+        <!-- 项目页面标题和按钮 -->
         <Grid Grid.Row="0" Margin="20,20,20,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            
+
             <TextBlock Grid.Column="0" 
-                       Text="Unity引擎" 
-                       FontSize="24" 
-                       Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
-                       FontWeight="Bold"/>
-            
+               Text="我的项目" 
+               FontSize="24" 
+               FontWeight="Bold"
+               Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"/>
+
             <ui:Button Grid.Column="1" 
-                       Content="添加引擎" 
+                       Content="添加项目" 
                        Icon="{ui:SymbolIcon Add24}"
                        Appearance="Primary"
-                       Command="{Binding AddEngineCommand}"/>
+                       Command="{Binding AddProjectCommand}"/>
         </Grid>
 
-        <!-- 引擎列表 -->
+        <!-- 项目列表 -->
         <ScrollViewer Grid.Row="1" 
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Disabled"
                       Margin="20,0,20,20">
-            <ItemsControl x:Name="EnginesList" ItemsSource="{Binding Engines}">
+            <ItemsControl x:Name="ProjectsList" ItemsSource="{Binding Projects}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel />
@@ -52,31 +52,31 @@
                                 </Grid.ColumnDefinitions>
                                 
                                 <ui:SymbolIcon Grid.Column="0" 
-                                               Symbol="Engine24" 
+                                               Symbol="Home24" 
                                                Margin="0,0,15,0"/>
                                 
                                 <StackPanel Grid.Column="1">
-                                    <TextBlock Text="{Binding Version}" 
+                                    <TextBlock Text="{Binding Name}" 
                                                FontWeight="Bold" 
                                                FontSize="16"/>
                                     <TextBlock Text="{Binding Path}" 
                                                Foreground="Gray" 
                                                Margin="0,5,0,0"/>
-                                    <TextBlock Text="{Binding IsInstalled}" 
-                                               Foreground="Blue" 
+                                    <TextBlock Text="{Binding UnityVersion}" 
+                                               Foreground="LightBlue" 
                                                Margin="0,5,0,0"/>
                                 </StackPanel>
                                 
                                 <StackPanel Grid.Column="2" 
                                             Orientation="Horizontal">
-                                    <ui:Button Content="打开文件夹" 
+                                    <ui:Button Content="打开" 
                                                Margin="0,0,5,0"
                                                Appearance="Primary"
-                                               Command="{Binding DataContext.OpenEngineFolderCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                               Command="{Binding DataContext.OpenProjectCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                                CommandParameter="{Binding}"/>
-                                    <ui:Button Content="移除" 
+                                    <ui:Button Content="在资源管理器中显示" 
                                                Appearance="Secondary"
-                                               Command="{Binding DataContext.RemoveEngineCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                               Command="{Binding DataContext.ShowInExplorerCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                                CommandParameter="{Binding}"/>
                                 </StackPanel>
                             </Grid>
@@ -87,4 +87,3 @@
         </ScrollViewer>
     </Grid>
 </Page>
-
