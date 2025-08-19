@@ -8,7 +8,7 @@ namespace UnityHub
         public EnginesPage()
         {
             InitializeComponent();
-            DataContext = new EnginesViewModel();
+            DataContext = ((App)System.Windows.Application.Current).Resources["EnginesVm"] as EnginesViewModel;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace UnityHub
         public SettingsPage()
         {
             InitializeComponent();
-            DataContext = new SettingsViewModel();
+            DataContext = ((App)System.Windows.Application.Current).Resources["SettingsVm"] as SettingsViewModel;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace UnityHub
         public ProjectsPage()
         {
             InitializeComponent();
-            DataContext = new ProjectsViewModel();
+            DataContext = ((App)System.Windows.Application.Current).Resources["ProjectsVm"] as ProjectsViewModel;
         }
     }
 }
