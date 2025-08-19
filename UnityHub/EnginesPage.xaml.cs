@@ -29,19 +29,31 @@ namespace UnityHub
 
         private void LoadEngines()
         {
-            // 从默认位置加载Unity引擎
-            var unityPaths = GetUnityInstallPaths();
-            foreach (var path in unityPaths)
+            // 首先加载已保存的引擎
+            Engines = ProjectDataService.LoadEngines();
+            
+            // 如果没有保存的引擎，则扫描默认路径
+            if (Engines.Count == 0)
             {
-                if (Directory.Exists(path))
+                var unityPaths = GetUnityInstallPaths();
+                foreach (var path in unityPaths)
                 {
-                    var version = GetUnityVersionFromPath(path);
-                    Engines.Add(new UnityEngine
+                    if (Directory.Exists(path))
                     {
-                        Version = version,
-                        Path = path,
-                        IsInstalled = true
-                    });
+                        var version = GetUnityVersionFromPath(path);
+                        Engines.Add(new UnityEngine
+                        {
+                            Version = version,
+                            Path = path,
+                            IsInstalled = true
+                        });
+                    }
+                }
+                
+                // 保存扫描到的引擎
+                if (Engines.Count > 0)
+                {
+                    ProjectDataService.SaveEngines(Engines);
                 }
             }
         }
@@ -111,12 +123,15 @@ namespace UnityHub
                             IsInstalled = true
                         });
 
+                        // 保存引擎数据
+                        ProjectDataService.SaveEngines(Engines);
+
                         var messageBox = new Wpf.Ui.Controls.MessageBox
                         {
                             Title = "成功",
                             Content = $"Unity引擎 {version} 已添加"
                         };
-                        messageBox.Show();
+                        messageBox.ShowDialogAsync();
                     }
                     else
                     {
@@ -125,7 +140,7 @@ namespace UnityHub
                             Title = "提示",
                             Content = "该引擎已存在"
                         };
-                        messageBox.Show();
+                        messageBox.ShowDialogAsync();
                     }
                 }
                 else
@@ -135,7 +150,7 @@ namespace UnityHub
                         Title = "错误",
                         Content = "所选文件夹不是有效的Unity引擎安装目录"
                     };
-                    messageBox.Show();
+                    messageBox.ShowDialogAsync();
                 }
             }
         }
@@ -160,7 +175,7 @@ namespace UnityHub
                         Title = "错误",
                         Content = $"打开文件夹时出错: {ex.Message}"
                     };
-                    messageBox.Show();
+                    messageBox.ShowDialogAsync();
                 }
             }
         }
@@ -174,10 +189,13 @@ namespace UnityHub
                     Title = "确认",
                     Content = $"确定要移除Unity引擎 {engine.Version} 吗？"
                 };
-                messageBox.Show();
+                messageBox.ShowDialogAsync();
                 
                 // 由于WPF UI的MessageBox不返回结果，我们直接移除
                 Engines.Remove(engine);
+                
+                // 保存引擎数据
+                ProjectDataService.SaveEngines(Engines);
             }
         }
 

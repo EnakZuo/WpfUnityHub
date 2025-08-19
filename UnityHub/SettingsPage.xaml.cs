@@ -1,14 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using Wpf.Ui;
-using Wpf.Ui.Controls;
 using Wpf.Ui.Appearance;
-using Application = System.Windows.Application;
+using UnityHub.Models;
 
 namespace UnityHub
 {
@@ -59,10 +58,18 @@ namespace UnityHub
 
         private void LoadSettings()
         {
-            // 加载默认设置
-            ProjectsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Unity Projects");
-            EnginesPath = @"C:\Program Files\Unity\Hub\Editor";
-            Theme = "Dark";
+            // 加载保存的设置
+            var settings = ProjectDataService.LoadSettings();
+            
+            ProjectsPath = settings.ContainsKey("ProjectsPath") 
+                ? settings["ProjectsPath"] 
+                : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Unity Projects");
+            
+            EnginesPath = settings.ContainsKey("EnginesPath") 
+                ? settings["EnginesPath"] 
+                : @"C:\Program Files\Unity\Hub\Editor";
+            
+            Theme = settings.ContainsKey("Theme") ? settings["Theme"] : "Dark";
 
             // 设置默认选中的主题
             foreach (ComboBoxItem item in ThemeComboBox.Items)
@@ -140,13 +147,22 @@ namespace UnityHub
         {
             try
             {
-                // 这里可以保存设置到配置文件
+                // 保存设置到配置文件
+                var settings = new Dictionary<string, string>
+                {
+                    ["ProjectsPath"] = ProjectsPath,
+                    ["EnginesPath"] = EnginesPath,
+                    ["Theme"] = Theme
+                };
+                
+                ProjectDataService.SaveSettings(settings);
+                
                 var messageBox = new Wpf.Ui.Controls.MessageBox
                 {
                     Title = "成功",
                     Content = "设置已保存"
                 };
-                messageBox.Show();
+                messageBox.ShowDialogAsync();
             }
             catch (Exception ex)
             {
@@ -155,7 +171,7 @@ namespace UnityHub
                     Title = "错误",
                     Content = $"保存设置时出错: {ex.Message}"
                 };
-                messageBox.Show();
+                messageBox.ShowDialogAsync();
             }
         }
 

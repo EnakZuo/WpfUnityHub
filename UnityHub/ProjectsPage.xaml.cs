@@ -26,18 +26,30 @@ namespace UnityHub
 
         private void InitializeData()
         {
-            // 加载默认路径的项目
-            var defaultPaths = new[]
+            // 首先加载已保存的项目
+            Projects = ProjectDataService.LoadProjects();
+            
+            // 如果没有保存的项目，则扫描默认路径
+            if (Projects.Count == 0)
             {
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Unity Projects"),
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Unity Projects")
-            };
-
-            foreach (var path in defaultPaths)
-            {
-                if (Directory.Exists(path))
+                var defaultPaths = new[]
                 {
-                    LoadProjectsFromPath(path);
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Unity Projects"),
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Unity Projects")
+                };
+
+                foreach (var path in defaultPaths)
+                {
+                    if (Directory.Exists(path))
+                    {
+                        LoadProjectsFromPath(path);
+                    }
+                }
+                
+                // 保存扫描到的项目
+                if (Projects.Count > 0)
+                {
+                    ProjectDataService.SaveProjects(Projects);
                 }
             }
         }
@@ -112,6 +124,9 @@ namespace UnityHub
                         UnityVersion = unityVersion,
                         LastModified = Directory.GetLastWriteTime(projectPath)
                     });
+
+                    // 保存项目数据
+                    ProjectDataService.SaveProjects(Projects);
 
                     var messageBox = new Wpf.Ui.Controls.MessageBox
                     {
@@ -189,7 +204,7 @@ namespace UnityHub
                         Title = "错误",
                         Content = $"打开资源管理器时出错: {ex.Message}"
                     };
-                    messageBox.Show();
+                    messageBox.ShowDialogAsync();
                 }
             }
         }
