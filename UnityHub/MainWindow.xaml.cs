@@ -1,16 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Windows;
-using Wpf.Ui;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Appearance;
-using Button = Wpf.Ui.Controls.Button;
-using MessageBox = Wpf.Ui.Controls.MessageBox;
 using UnityHub.Views;
 
 namespace UnityHub
