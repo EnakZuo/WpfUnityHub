@@ -46,7 +46,7 @@
                             <ui:Button Grid.Column="1" 
                                        Content="浏览" 
                                        Appearance="Secondary"
-                                       Click="BrowseProjectsPath_Click"/>
+                                       Command="{Binding BrowseProjectsPathCommand}"/>
                         </Grid>
                     </StackPanel>
                 </ui:Card>
@@ -73,7 +73,7 @@
                             <ui:Button Grid.Column="1" 
                                        Content="浏览" 
                                        Appearance="Secondary"
-                                       Click="BrowseEnginesPath_Click"/>
+                                       Command="{Binding BrowseEnginesPathCommand}"/>
                         </Grid>
                     </StackPanel>
                 </ui:Card>
@@ -87,7 +87,8 @@
                                    Margin="0,0,0,15"/>
                         
                         <ComboBox x:Name="ThemeComboBox"
-                                  SelectionChanged="ThemeComboBox_SelectionChanged">
+                                  SelectedValuePath="Tag"
+                                  SelectedValue="{Binding Theme}">
                             <ComboBoxItem Content="浅色主题" Tag="Light"/>
                             <ComboBoxItem Content="深色主题" Tag="Dark"/>
                             <ComboBoxItem Content="跟随系统" Tag="System"/>
@@ -99,7 +100,7 @@
                 <ui:Button Content="保存设置" 
                            Appearance="Primary"
                            HorizontalAlignment="Right"
-                           Click="SaveSettings_Click"/>
+                           Command="{Binding SaveSettingsCommand}"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

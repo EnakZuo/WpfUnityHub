@@ -27,7 +27,7 @@
                        Content="添加引擎" 
                        Icon="{ui:SymbolIcon Add24}"
                        Appearance="Primary"
-                       Click="AddEngine_Click"/>
+                       Command="{Binding AddEngineCommand}"/>
         </Grid>
 
         <!-- 引擎列表 -->
@@ -72,10 +72,12 @@
                                     <ui:Button Content="打开文件夹" 
                                                Margin="0,0,5,0"
                                                Appearance="Primary"
-                                               Click="OpenEngineFolder_Click"/>
+                                               Command="{Binding DataContext.OpenEngineFolderCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                               CommandParameter="{Binding}"/>
                                     <ui:Button Content="移除" 
                                                Appearance="Secondary"
-                                               Click="RemoveEngine_Click"/>
+                                               Command="{Binding DataContext.RemoveEngineCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                               CommandParameter="{Binding}"/>
                                 </StackPanel>
                             </Grid>
                         </ui:Card>

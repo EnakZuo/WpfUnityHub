@@ -27,7 +27,7 @@
                        Content="添加项目" 
                        Icon="{ui:SymbolIcon Add24}"
                        Appearance="Primary"
-                       Click="AddProject_Click"/>
+                       Command="{Binding AddProjectCommand}"/>
         </Grid>
 
         <!-- 项目列表 -->
@@ -72,10 +72,12 @@
                                     <ui:Button Content="打开" 
                                                Margin="0,0,5,0"
                                                Appearance="Primary"
-                                               Click="OpenProject_Click"/>
+                                               Command="{Binding DataContext.OpenProjectCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                               CommandParameter="{Binding}"/>
                                     <ui:Button Content="在资源管理器中显示" 
                                                Appearance="Secondary"
-                                               Click="ShowInExplorer_Click"/>
+                                               Command="{Binding DataContext.ShowInExplorerCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                               CommandParameter="{Binding}"/>
                                 </StackPanel>
                             </Grid>
                         </ui:Card>
