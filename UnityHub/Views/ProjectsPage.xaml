@@ -18,6 +18,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0" 
@@ -27,6 +28,13 @@
                Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"/>
 
             <ui:Button Grid.Column="1" 
+                       Content="导入项目" 
+                       Icon="{ui:SymbolIcon ArrowImport24}"
+                       Appearance="Secondary"
+                       Margin="0,0,10,0"
+                       Command="{Binding ImportProjectsCommand}"/>
+
+            <ui:Button Grid.Column="2" 
                        Content="添加项目" 
                        Icon="{ui:SymbolIcon Add24}"
                        Appearance="Primary"
@@ -70,6 +78,13 @@
 
                             <StackPanel Grid.Column="2"
                                         Orientation="Horizontal">
+                                <ComboBox Width="150"
+                                          Margin="0,0,10,0"
+                                          ItemsSource="{Binding DataContext.AvailableEngines, RelativeSource={RelativeSource AncestorType=Page}}"
+                                          DisplayMemberPath="Version"
+                                          SelectedValuePath="Version"
+                                          SelectedValue="{Binding SelectedEngineVersion, Mode=TwoWay}"
+                                          ToolTip="选择Unity引擎版本"/>
                                 <ui:Button Content="打开"
                                            Margin="0,0,5,0"
                                            Appearance="Primary"

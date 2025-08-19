@@ -10,6 +10,7 @@ namespace UnityHub.Models
         private string _path = string.Empty;
         private string _unityVersion = string.Empty;
         private DateTime _lastModified;
+        private string _selectedEngineVersion = string.Empty;
 
         public string Name
         {
@@ -48,6 +49,16 @@ namespace UnityHub.Models
             {
                 _lastModified = value;
                 OnPropertyChanged(nameof(LastModified));
+            }
+        }
+
+        public string SelectedEngineVersion
+        {
+            get => _selectedEngineVersion;
+            set
+            {
+                _selectedEngineVersion = value;
+                OnPropertyChanged(nameof(SelectedEngineVersion));
             }
         }
 
