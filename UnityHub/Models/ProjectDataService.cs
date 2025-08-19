@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace UnityHub.Models
 {
@@ -115,7 +116,7 @@ namespace UnityHub.Models
             {
                 Directory.CreateDirectory(DataDirectory);
 
-                // 直接序列化模型
+                // 直接序列化模型（包含 PlatformsLabel）
                 var json = JsonConvert.SerializeObject(engines, Formatting.Indented);
                 
                 File.WriteAllText(EnginesFile, json);
@@ -144,14 +145,15 @@ namespace UnityHub.Models
                             // 验证引擎路径是否仍然存在
                             if (Directory.Exists(data.Path))
                             {
-                                var unityExe = Path.Combine(data.Path, "Editor", "Unity.exe");
-                                if (File.Exists(unityExe))
+                                var unityExe = ResolveUnityExePath(data.Path);
+                                if (!string.IsNullOrEmpty(unityExe) && File.Exists(unityExe))
                                 {
+                                    // 直接恢复（PlatformsLabel 如果为空，ViewModel 首次会补齐）
                                     engines.Add(new UnityEngine
                                     {
                                         Version = data.Version,
                                         Path = data.Path,
-                                        IsInstalled = data.IsInstalled
+                                        PlatformsLabel = data.PlatformsLabel
                                     });
                                 }
                             }
@@ -167,5 +169,29 @@ namespace UnityHub.Models
             return engines;
         }
 
+        private static string? ResolveUnityExePath(string root)
+        {
+            try
+            {
+                var direct = Path.Combine(root, "Unity.exe");
+                if (File.Exists(direct)) return direct;
+                var editor = Path.Combine(root, "Editor", "Unity.exe");
+                if (File.Exists(editor)) return editor;
+                var editorX64 = Path.Combine(root, "Editor", "x64", "Unity.exe");
+                if (File.Exists(editorX64)) return editorX64;
+                var editorX64Release = Path.Combine(root, "Editor", "x64", "Release", "Unity.exe");
+                if (File.Exists(editorX64Release)) return editorX64Release;
+                var editorX86 = Path.Combine(root, "Editor", "x86", "Unity.exe");
+                if (File.Exists(editorX86)) return editorX86;
+
+                foreach (var f in Directory.EnumerateFiles(root, "Unity.exe", SearchOption.AllDirectories))
+                {
+                    return f;
+                }
+            }
+            catch { }
+
+            return null;
+        }
     }
 }

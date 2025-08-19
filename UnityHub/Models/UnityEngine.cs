@@ -7,7 +7,7 @@ namespace UnityHub.Models
     {
         private string _version = string.Empty;
         private string _path = string.Empty;
-        private bool _isInstalled;
+        private string _platformsLabel = string.Empty;
 
         public string Version
         {
@@ -29,13 +29,13 @@ namespace UnityHub.Models
             }
         }
 
-        public bool IsInstalled
+        public string PlatformsLabel
         {
-            get => _isInstalled;
+            get => _platformsLabel;
             set
             {
-                _isInstalled = value;
-                OnPropertyChanged(nameof(IsInstalled));
+                _platformsLabel = value;
+                OnPropertyChanged(nameof(PlatformsLabel));
             }
         }
 
