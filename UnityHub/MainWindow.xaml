@@ -42,7 +42,7 @@
                     </ui:NavigationViewItem>
                     <ui:NavigationViewItem Content="引擎" TargetPageType="{x:Type local:EnginesPage}">
                         <ui:NavigationViewItem.Icon>
-                            <ui:SymbolIcon Symbol="Settings24" />
+                            <ui:SymbolIcon Symbol="Engine24" />
                         </ui:NavigationViewItem.Icon>
                     </ui:NavigationViewItem>
                     <ui:NavigationViewItem Content="设置" TargetPageType="{x:Type local:SettingsPage}">
